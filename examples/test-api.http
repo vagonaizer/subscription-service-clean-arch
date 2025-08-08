@@ -1,0 +1,166 @@
+### Subscription Service API Tests
+### Base URL: http://localhost:8080
+
+### Health Check
+GET http://localhost:8080/health
+
+###
+
+### Health Ready Check
+GET http://localhost:8080/health/ready
+
+###
+
+### Health Live Check
+GET http://localhost:8080/health/live
+
+###
+
+### Create Subscription - Yandex Plus
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Yandex Plus",
+  "price": 400,
+  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cba",
+  "start_date": "07-2025"
+}
+
+###
+
+### Create Subscription - Netflix
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Netflix Premium",
+  "price": 799,
+  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cba",
+  "start_date": "01-2025",
+  "end_date": "12-2025"
+}
+
+###
+
+### Create Subscription - Spotify
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Spotify Premium",
+  "price": 199,
+  "user_id": "123e4567-e89b-12d3-a456-426614174000",
+  "start_date": "03-2025"
+}
+
+###
+
+### Get All Subscriptions
+GET http://localhost:8080/api/v1/subscriptions
+
+###
+
+### Get Subscriptions with Pagination
+GET http://localhost:8080/api/v1/subscriptions?limit=2&offset=0
+
+###
+
+### Get Subscriptions by User ID
+GET http://localhost:8080/api/v1/subscriptions?user_id=60601fee-2bf1-4721-ae6f-7636e79a0cba
+
+###
+
+### Get Subscriptions by Service Name
+GET http://localhost:8080/api/v1/subscriptions?service_name=Netflix
+
+###
+
+### Get Subscriptions by Date Range
+GET http://localhost:8080/api/v1/subscriptions?start_date=01-2025&end_date=06-2025
+
+###
+
+### Get User Subscriptions
+GET http://localhost:8080/api/v1/users/60601fee-2bf1-4721-ae6f-7636e79a0cba/subscriptions
+
+###
+
+### Get User Stats
+GET http://localhost:8080/api/v1/users/60601fee-2bf1-4721-ae6f-7636e79a0cba/subscriptions/stats
+
+###
+
+### Calculate Total Cost for Period
+GET http://localhost:8080/api/v1/costs/calculate?start_date=01-2025&end_date=12-2025
+
+###
+
+### Calculate Cost by User
+GET http://localhost:8080/api/v1/costs/calculate?user_id=60601fee-2bf1-4721-ae6f-7636e79a0cba&start_date=01-2025&end_date=12-2025
+
+###
+
+### Calculate Cost by Service
+GET http://localhost:8080/api/v1/costs/calculate?service_name=Netflix&start_date=01-2025&end_date=12-2025
+
+###
+
+### Get Specific Subscription (replace {id} with actual ID from create response)
+GET http://localhost:8080/api/v1/subscriptions/60601fee-2bf1-4721-ae6f-7636e79a0cba
+
+###
+
+### Update Subscription (replace {id} with actual ID)
+PUT http://localhost:8080/api/v1/subscriptions/60601fee-2bf1-4721-ae6f-7636e79a0cba
+Content-Type: application/json
+
+{
+  "service_name": "Yandex Plus Family",
+  "price": 599,
+  "end_date": "12-2025"
+}
+
+###
+
+### Delete Subscription (replace {id} with actual ID)
+DELETE http://localhost:8080/api/v1/subscriptions/60601fee-2bf1-4721-ae6f-7636e79a0cba
+
+###
+
+### Error Test - Invalid Date Format
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Test Service",
+  "price": 100,
+  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cba",
+  "start_date": "invalid-date"
+}
+
+###
+
+### Error Test - Invalid User ID
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Test Service",
+  "price": 100,
+  "user_id": "invalid-uuid",
+  "start_date": "07-2025"
+}
+
+###
+
+### Error Test - Negative Price
+POST http://localhost:8080/api/v1/subscriptions
+Content-Type: application/json
+
+{
+  "service_name": "Test Service",
+  "price": -100,
+  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cba",
+  "start_date": "07-2025"
+}

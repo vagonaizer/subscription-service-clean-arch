@@ -1,0 +1,22 @@
+server:
+  host: "0.0.0.0"
+  port: "8080"
+  read_timeout: 30
+  write_timeout: 30
+  idle_timeout: 120
+
+database:
+  host: "${DATABASE_HOST:-postgres}"
+  port: "${DATABASE_PORT:-5432}"
+  user: "${DATABASE_USER:-postgres}"
+  password: "${DATABASE_PASSWORD:-postgres}"
+  db_name: "${DATABASE_DB_NAME:-subscription_service}"
+  ssl_mode: "${DATABASE_SSL_MODE:-require}"
+  max_open_conns: 50
+  max_idle_conns: 25
+  max_lifetime: 600
+
+logger:
+  level: "${LOG_LEVEL:-info}"
+  development: false
+  encoding: "json"

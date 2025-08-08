@@ -1,0 +1,575 @@
+basePath: /api/v1
+definitions:
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_request.CreateSubscriptionRequest:
+    properties:
+      end_date:
+        example: 12-2025
+        type: string
+      price:
+        example: 400
+        maximum: 1000000
+        minimum: 1
+        type: integer
+      service_name:
+        example: Yandex Plus
+        maxLength: 255
+        minLength: 1
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    required:
+    - price
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_request.UpdateSubscriptionRequest:
+    properties:
+      end_date:
+        example: 12-2025
+        type: string
+      price:
+        example: 799
+        maximum: 1000000
+        minimum: 1
+        type: integer
+      service_name:
+        example: Netflix Premium
+        maxLength: 255
+        minLength: 1
+        type: string
+      start_date:
+        example: 08-2025
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.CostSummaryResponse:
+    properties:
+      currency:
+        example: RUB
+        type: string
+      period:
+        $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.PeriodResponse'
+      total_cost:
+        example: 2400
+        type: integer
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorDetail:
+    properties:
+      code:
+        example: INVALID_INPUT
+        type: string
+      details:
+        additionalProperties:
+          type: string
+        type: object
+      message:
+        example: Invalid input provided
+        type: string
+      request_id:
+        example: 20250115103000-abc123
+        type: string
+      timestamp:
+        example: "2025-01-15T10:30:00Z"
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorDetail'
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.HealthResponse:
+    properties:
+      services:
+        additionalProperties:
+          type: string
+        type: object
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.PaginationResponse:
+    properties:
+      has_more:
+        example: true
+        type: boolean
+      limit:
+        example: 20
+        type: integer
+      offset:
+        example: 0
+        type: integer
+      total:
+        example: 150
+        type: integer
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.PeriodResponse:
+    properties:
+      end_date:
+        example: 06-2025
+        type: string
+      start_date:
+        example: 01-2025
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.StatsResponse:
+    properties:
+      total_subscriptions:
+        type: integer
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionResponse:
+    properties:
+      created_at:
+        example: "2025-01-15T10:30:00Z"
+        type: string
+      end_date:
+        example: 12-2025
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      updated_at:
+        example: "2025-01-15T10:30:00Z"
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionResponse'
+        type: array
+      pagination:
+        $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.PaginationResponse'
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationError:
+    properties:
+      field:
+        example: price
+        type: string
+      message:
+        example: must be greater than 0
+        type: string
+      value:
+        example: "-100"
+        type: string
+    type: object
+  github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorDetail'
+      validation_errors:
+        items:
+          $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationError'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: REST API for managing user subscriptions
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Subscription Service API
+  version: "1.0"
+paths:
+  /costs/calculate:
+    get:
+      description: Calculate total cost of subscriptions for a given period with optional
+        filtering
+      parameters:
+      - description: User ID filter
+        format: uuid
+        in: query
+        name: user_id
+        type: string
+      - description: Service name filter
+        in: query
+        name: service_name
+        type: string
+      - description: Start date (MM-YYYY format)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End date (MM-YYYY format)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.CostSummaryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Calculate total subscription cost
+      tags:
+      - costs
+  /health:
+    get:
+      description: Get overall health status of the service and its dependencies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.HealthResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.HealthResponse'
+      summary: Health check
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Check if service is alive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Liveness check
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Check if service is ready to accept traffic
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Readiness check
+      tags:
+      - health
+  /subscriptions:
+    get:
+      description: Get list of subscriptions with optional filtering
+      parameters:
+      - description: User ID filter
+        format: uuid
+        in: query
+        name: user_id
+        type: string
+      - description: Service name filter
+        in: query
+        name: service_name
+        type: string
+      - description: Start date filter (MM-YYYY format)
+        in: query
+        name: start_date
+        type: string
+      - description: End date filter (MM-YYYY format)
+        in: query
+        name: end_date
+        type: string
+      - default: 20
+        description: Limit number of results
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionsListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: List subscriptions
+      tags:
+      - subscriptions
+    post:
+      consumes:
+      - application/json
+      description: Create a new subscription for a user
+      parameters:
+      - description: Subscription data
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_request.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Create a new subscription
+      tags:
+      - subscriptions
+  /subscriptions/{id}:
+    delete:
+      description: Delete a subscription by ID
+      parameters:
+      - description: Subscription ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Delete subscription
+      tags:
+      - subscriptions
+    get:
+      description: Get a single subscription by its ID
+      parameters:
+      - description: Subscription ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Get subscription by ID
+      tags:
+      - subscriptions
+    put:
+      consumes:
+      - application/json
+      description: Update an existing subscription
+      parameters:
+      - description: Subscription ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated subscription data
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_request.UpdateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ValidationErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Update subscription
+      tags:
+      - subscriptions
+  /users/{user_id}/subscriptions:
+    get:
+      description: Get all subscriptions for a specific user
+      parameters:
+      - description: User ID
+        format: uuid
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - default: 20
+        description: Limit number of results
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.SubscriptionsListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Get user subscriptions
+      tags:
+      - subscriptions
+  /users/{user_id}/subscriptions/stats:
+    get:
+      description: Get total number of subscriptions for a user
+      parameters:
+      - description: User ID
+        format: uuid
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.StatsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_vagonaizer_effective-mobile_subscription-service_internal_transport_http_dto_response.ErrorResponse'
+      summary: Get user subscription statistics
+      tags:
+      - subscriptions
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
+tags:
+- description: Subscription management operations
+  name: subscriptions
+- description: Health check operations
+  name: health
+- description: Cost calculation operations
+  name: costs
