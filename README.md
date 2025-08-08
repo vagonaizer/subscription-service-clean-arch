@@ -408,22 +408,8 @@ The project includes comprehensive testing at multiple levels:
 
 ### API Testing Tools
 
-The service includes multiple API testing approaches:
-
-1. **Automated Script** - `./test-api.sh`
-2. **HTTP Client Files** - `test-api.http` (VS Code/IntelliJ)
-3. **Postman Collection** - `subscription-service.postman_collection.json`
-
-### Test Coverage
-
-The test suite covers:
-- All CRUD operations
-- Business logic validation
-- Error handling scenarios
-- Edge cases and boundary conditions
-- Integration between layers
-
-For detailed testing instructions, see [Testing Guide](README-TESTING.md).
+1. **HTTP Client Files** - `test-api.http` (VS Code/IntelliJ)
+2. TODO: Postman collection
 
 ## Deployment
 
