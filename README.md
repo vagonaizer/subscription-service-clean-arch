@@ -34,7 +34,7 @@ The Subscription Service provides a comprehensive REST API for managing user sub
 
 ### Technology Stack
 
-- **Language:** Go 1.21+
+- **Language:** Go 
 - **Database:** PostgreSQL with pgx driver
 - **HTTP Framework:** Gin for high-performance routing
 - **Configuration:** Viper with YAML/ENV support
