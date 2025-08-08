@@ -1,4 +1,4 @@
-# Subscription Service
+# Subscription Service with Clean Architecture
 
 A production-ready REST API for managing user subscriptions built with Go, following Clean Architecture principles.
 
