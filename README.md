@@ -20,9 +20,6 @@ A production-ready REST API for managing user subscriptions built with Go, follo
 
 The Subscription Service provides a comprehensive REST API for managing user subscriptions with advanced features including cost calculations, filtering, and real-time monitoring.
 
-![System Overview](docs/diagrams/api-flow.svg)
-![High-Level Design](docs/diagrams/architecture.svg)
-
 ### Key Features
 
 - **Full CRUD Operations** - Create, read, update, and delete subscriptions
