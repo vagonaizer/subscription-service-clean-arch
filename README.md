@@ -286,20 +286,6 @@ The service supports multiple configuration sources:
 2. **Environment variables** - Override any YAML setting
 3. **Command line flags** - Development overrides
 
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `SERVER_HOST` | Server bind address | `0.0.0.0` |
-| `SERVER_PORT` | Server port | `8080` |
-| `DATABASE_HOST` | PostgreSQL host | `localhost` |
-| `DATABASE_PORT` | PostgreSQL port | `5432` |
-| `DATABASE_USER` | Database username | `postgres` |
-| `DATABASE_PASSWORD` | Database password | `postgres` |
-| `DATABASE_DB_NAME` | Database name | `subscription_service` |
-| `LOGGER_LEVEL` | Log level | `info` |
-| `LOGGER_DEVELOPMENT` | Development mode | `false` |
-
 ### Example Configuration
 
 ```yaml
