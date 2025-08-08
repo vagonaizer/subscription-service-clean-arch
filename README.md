@@ -200,9 +200,6 @@ The Swagger documentation includes:
 # Generate Swagger docs
 make docs
 
-# Generate architecture diagrams
-make diagrams
-
 # The documentation will be available at /swagger/index.html when the service is running
 ```
 
