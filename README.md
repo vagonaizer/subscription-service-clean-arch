@@ -12,7 +12,6 @@ A production-ready REST API for managing user subscriptions built with Go, follo
 - [Endpoints](#endpoints)
 - [Configuration](#configuration)
 - [Development](#development)
-- [Testing](#testing)
 - [Deployment](#deployment)
 - [Project Structure](#project-structure)
 
@@ -414,22 +413,6 @@ The project includes comprehensive testing at multiple levels:
 - **Integration Tests** - Tests with real database connections
 - **End-to-End Tests** - Full system tests through HTTP API
 - **API Tests** - Automated testing scripts and collections
-
-### Test Commands
-
-```bash
-# Unit tests
-make test
-
-# Integration tests (requires test database)
-make test-integration
-
-# End-to-end tests (requires running service)
-make test-e2e
-
-# API integration tests
-make test-api
-```
 
 ### API Testing Tools
 
